@@ -1,0 +1,744 @@
+/* ==========================================================================
+   AIコーディネート機能 専用スタイル (assets/css/ai-coordination.css)
+   ========================================================================== */
+
+:root {
+  --ai-primary: #4f46e5;
+  --ai-primary-light: #eef2ff;
+  --ai-primary-hover: #4338ca;
+  --ai-accent: #ec4899;
+  --ai-text-main: #1f2937;
+  --ai-text-muted: #6b7280;
+  --ai-bg-card: #ffffff;
+  --ai-bg-subtle: #f9fafb;
+  --ai-border: #e5e7eb;
+  --ai-radius-lg: 14px;
+  --ai-radius-md: 10px;
+  --ai-radius-sm: 6px;
+  --ai-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --ai-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+
+.ai-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+  font-family: inherit;
+  color: var(--ai-text-main);
+}
+
+/* ページヘッダー */
+.ai-page-header {
+  margin-bottom: 24px;
+}
+
+.ai-page-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ai-page-title {
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #111827;
+  margin: 0;
+}
+
+.ai-page-title i {
+  color: var(--ai-primary);
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ai-page-subtitle {
+  color: var(--ai-text-muted);
+  font-size: 14px;
+  margin: 6px 0 0;
+}
+
+/* 4つのタブメニュー */
+.ai-tab-nav {
+  display: flex;
+  gap: 8px;
+  background-color: #f3f4f6;
+  padding: 6px;
+  border-radius: var(--ai-radius-lg);
+  margin-bottom: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.ai-tab-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.ai-tab-btn {
+  flex: 1;
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: var(--ai-radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ai-text-muted);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.ai-tab-btn:hover {
+  color: var(--ai-primary);
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.ai-tab-btn.active {
+  color: var(--ai-primary);
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.ai-tab-btn .tab-badge {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.ai-tab-btn.active .tab-badge {
+  background-color: var(--ai-primary-light);
+  color: var(--ai-primary);
+}
+
+/* 条件選択パネル (最大3つまで) */
+.condition-panel {
+  background: #ffffff;
+  border: 1px solid var(--ai-border);
+  border-radius: var(--ai-radius-lg);
+  padding: 20px 24px;
+  margin-bottom: 28px;
+  box-shadow: var(--ai-shadow);
+}
+
+.condition-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.condition-panel-title {
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: #1f2937;
+}
+
+.condition-counter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: var(--ai-text-muted);
+  transition: all 0.2s ease;
+}
+
+.condition-counter-badge.limit-reached {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+/* 2列グリッドのドロップダウン群 */
+.condition-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 20px;
+}
+
+@media (max-width: 640px) {
+  .condition-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.condition-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  transition: opacity 0.2s ease;
+}
+
+.condition-field.is-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.condition-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.condition-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.condition-select {
+  width: 100%;
+  padding: 10px 36px 10px 14px;
+  font-size: 14px;
+  color: #111827;
+  background-color: #ffffff;
+  border: 1.5px solid var(--ai-border);
+  border-radius: var(--ai-radius-md);
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.condition-select:focus {
+  border-color: var(--ai-primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.condition-select.has-value {
+  border-color: var(--ai-primary);
+  background-color: var(--ai-primary-light);
+  font-weight: 600;
+  color: var(--ai-primary);
+}
+
+.condition-select:disabled {
+  background-color: #f3f4f6;
+  border-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.select-arrow {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none;
+  font-size: 12px;
+}
+
+.condition-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.condition-limit-msg {
+  font-size: 13px;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.condition-limit-msg.alert {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.condition-button-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.btn-ai-reset {
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+  background: #ffffff;
+  border: 1px solid var(--ai-border);
+  border-radius: var(--ai-radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.btn-ai-reset:hover {
+  background: #f9fafb;
+  color: #111827;
+}
+
+.btn-ai-apply {
+  padding: 9px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background: var(--ai-primary);
+  border: none;
+  border-radius: var(--ai-radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+}
+
+.btn-ai-apply:hover {
+  background: var(--ai-primary-hover);
+  box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
+}
+
+/* 適用中の条件バッジリスト */
+.active-conditions-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border-radius: var(--ai-radius-md);
+  border: 1px solid #e2e8f0;
+}
+
+.active-cond-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.cond-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #334155;
+  text-decoration: none;
+}
+
+.cond-chip:hover {
+  border-color: #94a3b8;
+}
+
+.cond-chip .remove-chip {
+  color: #94a3b8;
+  font-size: 11px;
+}
+.cond-chip:hover .remove-chip {
+  color: #ef4444;
+}
+
+/* ----------------------------------------------------
+   ① AIが提案するコーデ (Coordination Look Cards)
+   ---------------------------------------------------- */
+.ai-coord-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.ai-coord-card {
+  background: #ffffff;
+  border: 1px solid var(--ai-border);
+  border-radius: var(--ai-radius-lg);
+  padding: 24px;
+  box-shadow: var(--ai-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ai-coord-card:hover {
+  box-shadow: var(--ai-shadow-hover);
+}
+
+.ai-coord-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.ai-coord-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+}
+
+.ai-coord-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ai-coord-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.ai-coord-comment {
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+  border-left: 4px solid var(--ai-primary);
+  border-radius: 0 var(--ai-radius-sm) var(--ai-radius-sm) 0;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  color: #3730a3;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+.ai-coord-comment i {
+  color: var(--ai-primary);
+  font-size: 16px;
+  margin-top: 2px;
+}
+
+.ai-coord-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.ai-look-item {
+  background: #f9fafb;
+  border: 1px solid #f3f4f6;
+  border-radius: var(--ai-radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.ai-look-item:hover {
+  background: #ffffff;
+  border-color: #e5e7eb;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+.ai-item-source-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.badge-my-closet {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+.badge-norn-item {
+  background-color: var(--ai-primary);
+  color: #ffffff;
+}
+
+.ai-look-item-thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--ai-radius-sm);
+  overflow: hidden;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.ai-look-item-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ai-look-item-cat {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ai-text-muted);
+  text-transform: uppercase;
+}
+
+.ai-look-item-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+  margin: 2px 0 6px;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 35px;
+}
+
+.ai-look-item-price {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  margin-top: auto;
+}
+
+.btn-look-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--ai-radius-sm);
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-look-link.buy {
+  background-color: #111827;
+  color: #ffffff;
+}
+.btn-look-link.buy:hover {
+  background-color: #374151;
+}
+
+.btn-look-link.my {
+  background-color: #e5e7eb;
+  color: #374151;
+  cursor: default;
+}
+
+/* ----------------------------------------------------
+   ② 持っている服 & ③ お気に入り & ④ おすすめ グリッド
+   ---------------------------------------------------- */
+.ai-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.ai-standard-card {
+  background: #ffffff;
+  border: 1px solid var(--ai-border);
+  border-radius: var(--ai-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--ai-shadow);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.ai-standard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ai-shadow-hover);
+}
+
+.ai-card-image-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  position: relative;
+  background-color: #f9fafb;
+}
+
+.ai-card-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.ai-standard-card:hover .ai-card-image-wrap img {
+  transform: scale(1.04);
+}
+
+.ai-card-content {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.ai-card-brand {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ai-text-muted);
+  margin-bottom: 2px;
+}
+
+.ai-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 6px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 38px;
+}
+
+.ai-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.meta-pill {
+  font-size: 11px;
+  padding: 2px 6px;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+  color: #4b5563;
+}
+
+.ai-card-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin-top: auto;
+  margin-bottom: 10px;
+}
+
+/* ④ おすすめカード特有の相性バッジ */
+.ai-match-badge {
+  background: #fdf2f8;
+  border: 1px solid #fbcfe8;
+  border-radius: var(--ai-radius-sm);
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #9d174d;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  line-height: 1.4;
+}
+
+.ai-match-badge i {
+  color: var(--ai-accent);
+  margin-top: 2px;
+}
+
+/* お気に入りハートボタン */
+.card-fav-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #9ca3af;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.2s;
+  z-index: 3;
+}
+
+.card-fav-btn.active {
+  color: #ef4444;
+}
+
+.card-fav-btn:hover {
+  transform: scale(1.1);
+}
+
+/* 空状態 (No results) */
+.ai-empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: #ffffff;
+  border-radius: var(--ai-radius-lg);
+  border: 1px dashed var(--ai-border);
+}
+
+.ai-empty-icon {
+  font-size: 48px;
+  color: #d1d5db;
+  margin-bottom: 14px;
+}
+
+.ai-empty-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #374151;
+  margin: 0 0 8px;
+}
+
+.ai-empty-desc {
+  font-size: 14px;
+  color: var(--ai-text-muted);
+  margin: 0 0 20px;
+}
